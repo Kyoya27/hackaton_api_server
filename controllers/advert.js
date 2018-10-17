@@ -8,18 +8,18 @@ AdvertController.add = function(name, quantity, state, date_lapsing, end_date, s
 	return Advert.create({
 		name: name,
 		lastname: lastname,
-		firstname: firstname, 
-		quantity: quantity, 
-		state: state, 
-		date_lapsing: date_lapsing, 
-		end_date: end_date, 
-		start_time_slot: start_time_slot, 
-		end_time_slot: end_time_slot, 
+		firstname: firstname,
+		quantity: quantity,
+		state: state,
+		date_lapsing: date_lapsing,
+		end_date: end_date,
+		start_time_slot: start_time_slot,
+		end_time_slot: end_time_slot,
 		comment: comment
 	});
 };
 
-AdvertController.update = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment){
+AdvertController.update = function(id,name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment){
 	const options = {}
 	if(name !== undefined){
 		options.name = name;

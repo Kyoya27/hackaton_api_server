@@ -7,27 +7,15 @@ const Admin = controllers.AdminController;
 const productRouter = express.Router();
 productRouter.use(bodyParser.json());
 
-productRouter.post('/add', Admin.verifyToken, function(req, res){
-	let name = req.body.name;
-	let price = req.body.price;
-	let highlight = req.body.priority;
-	let category = req.body.category;
-	let available = req.body.available;
-	let id_promotion = req.body.id_promotion;
-	if(name === undefined || price === undefined ||category === undefined){
-		res.status(400).end();
-		return;
-	}
-	if(highlight === undefined){
-		highlight = 0;
-	}
-	if(available === undefined){
-		available = 0;
-	}
-	if(id_promotion === undefined || id_promotion === 0 || id_promotion === ""){
-		id_promotion = null;
-	}
-	ProductController.add(name, price, highlight, category, available, id_promotion)
+productRouter.post('/add/:name/:id_category', Admin.verifyToken, function(req, res){
+let name = req.params.name;
+let id_category = req.params.id_category;
+
+if(name === undefined || id_category === undefined){
+	res.status(400).end();
+	return;
+}
+	ProductController.add(name,id_category)
 	.then((product) =>{
 		res.status(201).json(product);
 	})
@@ -36,12 +24,17 @@ productRouter.post('/add', Admin.verifyToken, function(req, res){
 	})
 });
 
-productRouter.post('/update', Admin.verifyToken, function(req, res){
-	if(req.body.id === undefined){
+productRouter.post('/update/:id/:name/:id_category', Admin.verifyToken, function(req, res){
+
+	let id = req.params.id;
+	let id_category = req.params.id_category;
+
+	if( name === undefined || id_category === undefined){
 		res.status(400).end();
 		return;
 	}
-	ProductController.update(req.body.id, req.body.name, req.body.price, req.body.highlight, req.body.category, req.body.available, req.body.id_promotion)
+
+	ProductController.update(name, id_category)
 	.catch((err) =>{
 		console.log(err);
 		res.status(500).end();
@@ -50,19 +43,29 @@ productRouter.post('/update', Admin.verifyToken, function(req, res){
 });
 
 
-productRouter.post('/delete', Admin.verifyToken, function(req, res){
-	if(req.body.id === undefined){
+productRouter.post('/delete/:id', Admin.verifyToken, function(req, res){
+
+ let id = req.params.id;
+	if(id === undefined){
 		res.status(400).end();
 		return;
 	}
-	ProductController.delete(req.body.id)
+	ProductController.delete(id)
 	res.status(204).end();
 });
 
-productRouter.get('/', function(req,res){
+productRouter.get('/all/:name/:id_category', function(req,res){
+
+let name = req.params.name;
+let id_category = req.params.id_category;
+	if( name === undefined || id_category === undefined){
+		res.status(400).end();
+		return;
+	}
+
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	ProductController.getAll(req.query.name, req.query.price, req.query.priority, req.query.category, req.query.available, req.query.id_promotion, limit, offset)
+	ProductController.getAll(name,id_category, limit, offset)
 	.then((products) => {
 		res.json(products);
 	})
@@ -72,12 +75,16 @@ productRouter.get('/', function(req,res){
 	})
 });
 
-productRouter.get('/getProduct', function(req,res){
-	if( req.query.id === undefined){
+productRouter.get('/getProduct/:id', function(req,res){
+
+	let id = req.params.id;
+
+	if(id === undefined){
 		res.status(400).end();
 		return;
 	}
-	ProductController.getProduct(req.query.id)
+
+	ProductController.getProduct(id)
 	.then((product) => {
 		res.json(product);
 	})

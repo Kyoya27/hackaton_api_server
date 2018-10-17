@@ -7,12 +7,19 @@ module.exports = function(sequelize, DataTypes){
 		},
 		name: {
 			type: DataTypes.STRING,
-			allowNull: false
+			primaryKey: true
 		}
-	}, {
+	},
+		 {
+		paranoid: false,
 		underscored: true,
-		timestamps: false,
-		freezeTableName: true
+		freezeTableName: true,
+		timestamps: false
 	});
-	return Product;
+	Category.associate = _associate;
+	return Category;
+}
+
+function _associate(models) {
+	models.Advert.hasMany(models.Product, { foreignKey: 'id_product', targetKey: 'id' });
 }

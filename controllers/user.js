@@ -8,14 +8,14 @@ UserController.add = function(mail, firstname, lastname, password, password2, ad
 	return User.create({
 		mail: mail,
 		firstname: firstname,
-		lastname: lastname, 
-		password: password, 
-		password2: password2, 
+		lastname: lastname,
+		password: password,
+		password2: password2,
 		adress: adress
 	});
 };
 
-UserController.update = function(mail, firstname, lastname, password, password2, adress){
+UserController.update = function(id,mail, firstname, lastname, password, password2, adress){
 	const options = {}
 	if(mail !== undefined){
 		options.mail = mail;
