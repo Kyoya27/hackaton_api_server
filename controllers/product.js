@@ -4,36 +4,20 @@ const Op = ModelIndex.Sequelize.Op;
 
 const ProductController = function(){};
 
-ProductController.add = function(name, price, highlight, category, available, id_promotion){
+ProductController.add = function(name, id_category){
 	return Product.create({
 		name: name,
-		price: price,
-		highlight: highlight,
-		category: category,
-		available: available,
-		id_promotion: id_promotion
+		id_category: id_category
 	});
 };
 
-ProductController.update = function(id, name, price, highlight, category, available, id_promotion){
+ProductController.update = function(name, id_category){
 	const options = {}
 	if(name !== undefined){
 		options.name = name;
 	}
-	if(price !== undefined){
-		options.price = price;
-	}
-	if(highlight !== undefined){
-		options.highlight = highlight;
-	}
-	if(category !== undefined){
-		options.category = category;
-	}
-	if(available !== undefined){
-		options.available = available;
-	}
-	if(id_promotion !== undefined){
-		options.id_promotion = id_promotion;
+	if(id_category !== undefined){
+		options.id_category = id_category;
 	}
 	return Product.update(options, {returning: true, where: {id: id}});
 }
@@ -43,7 +27,7 @@ ProductController.delete = function(id){
 }
 
 
-ProductController.getAll = function(name, price, priority, category, available, id_promotion, limit, offset){
+ProductController.getAll = function(name, id_category, limit, offset){
 	const where = {};
 	const options = {};
 	if(name!== undefined){
@@ -51,29 +35,9 @@ ProductController.getAll = function(name, price, priority, category, available, 
 			[Op.like]: `${name}%`
 		}
 	}
-	if(price!== undefined){
-		where.price = {
-			[Op.like]: `${price}%`
-		}
-	}
-	if(priority!== undefined){
-		where.highlight = {
-			[Op.like]: `${priority}%`
-		}
-	}
-	if(category!== undefined){
-		where.category = {
-			[Op.like]: `${category}%`
-		}
-	}
-	if(available!== undefined){
-		where.available = {
-			[Op.like]: `${available}%`
-		}
-	}
-	if(id_promotion!== undefined){
-		where.id_promotion = {
-			[Op.like]: `${id_promotion}%`
+	if(id_category!== undefined){
+		where.id_category = {
+			[Op.like]: `${id_category}%`
 		}
 	}
 	options.where = where;

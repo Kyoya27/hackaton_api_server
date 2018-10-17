@@ -1,7 +1,7 @@
 module.exports = {
-  MenuController: require('./menu'),
+  UserController: require('./user'),
   ProductController: require('./product'),
   AdminController: require('./admin'),
-  PromotionController: require('./promotion'),
-  CommandController: require('./command')
+  AdvertController: require('./advert'),
+  CategoryController: require('./category')
 }
