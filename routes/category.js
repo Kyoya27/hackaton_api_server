@@ -50,30 +50,17 @@ categoryRouter.post('/delete/:id', Admin.verifyToken, function(req, res){
 	res.status(204).end();
 });
 
-categoryRouter.get('/all/:name', Admin.verifyToken, function(req,res){
-	let name = req.params.name;
+categoryRouter.get('/all' , function(req,res){
+
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-
-	if(name === undefined){
-		res.status(400).end();
-		return;
-	}
-
-	CategoryController.getAll(name, limit, offset)
+	CategoryController.getAll(limit, offset)
 	.then((categorys) => {
 		res.json(categorys);
 	})
 	.catch((err) =>{
 		console.log(err);
 		res.status(500).end();
-	})
-});
-
-categoryRouter.get('/allCategory' , function(req,res){
-	CategoryController.getAllCategory()
-	.then((categories)=>{
-		res.json(categories);
 	})
 });
 

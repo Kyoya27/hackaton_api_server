@@ -23,14 +23,10 @@ CategoryController.delete = function(id){
 }
 
 
-CategoryController.getAll = function(name, limit, offset){
+CategoryController.getAll = function(limit, offset){
 	const where = {};
 	const options = {};
-	if(name!== undefined){
-		where.name = {
-			[Op.like]: `${name}%`
-		}
-	}
+
 	options.where = where;
 	if(limit !== undefined){
 		options.limit = limit;
@@ -53,9 +49,6 @@ CategoryController.getCategory = function(id){
 	return Category.find(options)
 }
 
-CategoryController.getAllCategory = function(){
-	return Category.findAll();
-}
 
 
 module.exports = CategoryController;
