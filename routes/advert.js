@@ -4,6 +4,8 @@ const controllers = require('../controllers');
 const AdvertController = controllers.AdvertController;
 const Admin = controllers.AdminController;
 
+const ProductController = controllers.ProductController;
+
 const advertRouter = express.Router();
 advertRouter.use(bodyParser.json());
 
@@ -76,7 +78,7 @@ advertRouter.get('/all', function(req,res){
 
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	AdvertController.getAll(req.query.name, req.query.quantity, req.query.state, req.query.date_lapsing, req.query.end_date, req.query.start_time_slot, req.query.end_time_slot, req.query.comment, limit, offset)
+	AdvertController.getAll(req.query.name, req.query.quantity, req.query.state, req.query.date_lapsing, req.query.end_date, req.query.start_time_slot, req.query.end_time_slot, req.query.comment, req.query.id_user, req.query.id_product, req.query.id_category, limit, offset)
 	.then((adverts) => {
 		res.json(adverts);
 	})

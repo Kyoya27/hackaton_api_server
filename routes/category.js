@@ -55,8 +55,8 @@ categoryRouter.get('/all' , function(req,res){
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
 	CategoryController.getAll(limit, offset)
-	.then((categorys) => {
-		res.json(categorys);
+	.then((categories) => {
+		res.json(categories);
 	})
 	.catch((err) =>{
 		console.log(err);

@@ -4,7 +4,7 @@ const Op = ModelIndex.Sequelize.Op;
 
 const AdvertController = function(){};
 
-AdvertController.add = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product){
+AdvertController.add = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product, id_category){
 	return Advert.create({
 		name: name,
 		quantity: quantity,
@@ -15,11 +15,12 @@ AdvertController.add = function(name, quantity, state, date_lapsing, end_date, s
 		end_time_slot: end_time_slot,
 		comment: comment,
 		id_user: id_user,
-		id_product: id_product
+		id_product: id_product,
+		id_category: id_category
 	});
 };
 
-AdvertController.update = function(id,name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product){
+AdvertController.update = function(id,name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product, id_category){
 	const options = {}
 	if(name !== undefined){
 		options.name = name;
@@ -51,6 +52,9 @@ AdvertController.update = function(id,name, quantity, state, date_lapsing, end_d
 	if(id_product !== undefined){
 		options.id_product = id_product;
 	}
+	if(id_category !== undefined){
+		options.id_category = id_category;
+	}
 	return Advert.update(options, {returning: true, where: {id: id}});
 }
 
@@ -59,7 +63,7 @@ AdvertController.delete = function(id){
 }
 
 
-AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product, limit, offset){
+AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product, id_category, limit, offset){
 	const where = {};
 	const options = {};
 	if(name!== undefined){
@@ -110,6 +114,11 @@ AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date
 	if(id_product!== undefined){
 		where.id_product = {
 			[Op.like]: `${id_product}%`
+		}
+	}
+	if(id_category!== undefined){
+		where.id_category = {
+			[Op.like]: `${id_category}%`
 		}
 	}
 	options.where = where;
