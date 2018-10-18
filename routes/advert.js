@@ -7,23 +7,26 @@ const Admin = controllers.AdminController;
 const advertRouter = express.Router();
 advertRouter.use(bodyParser.json());
 
-advertRouter.post('/add/:name/:quantity/:state/:date_lapsing/:end_date/:start_time_slot/:end_time_slot/:comment', Admin.verifyToken, function(req, res){
+advertRouter.post('/add', Admin.verifyToken, function(req, res){
 
-let name = req.params.name;
-let quantity = req.params.quantity;
-let state = req.params.state;
-let date_lapsing = req.params.date_lapsing;
-let end_date = req.params.end_date;
-let start_time_slot = req.params.start_time_slot;
-let end_time_slot = req.params.end_time_slot;
-let comment = req.params.comment;
+let name = req.body.name;
+let quantity = req.body.quantity;
+let state = req.body.state;
+let date_lapsing = req.body.date_lapsing;
+let end_date = req.body.end_date;
+let start_time_slot = req.body.start_time_slot;
+let end_time_slot = req.body.end_time_slot;
+let comment = req.body.comment;
+let id_product = req.body.id_product;
+let id_user = req.body.id_user;
+
 
 
 if(name === undefined || quantity === undefined || state === undefined || date_lapsing === undefined || end_date === undefined || start_time_slot === undefined || end_time_slot === undefined || comment === undefined ){
   res.status(400).end();
   return;
 }
-AdvertController.add(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment)
+AdvertController.add(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment, id_user, id_product)
 	.then((advert) =>{
 		res.status(201).json(advert);
 	})
@@ -32,17 +35,17 @@ AdvertController.add(name, quantity, state, date_lapsing, end_date, start_time_s
 	})
 });
 
-advertRouter.post('/update/:id/:name/:quantity/:state/:date_lapsing/:end_date/:start_time_slot/:end_time_slot/:comment', Admin.verifyToken, function(req, res){
+advertRouter.post('/update', Admin.verifyToken, function(req, res){
 
-	let id = req.params.id;
-  let name = req.params.name;
-  let quantity = req.params.quantity;
-  let state = req.params.state;
-  let date_lapsing = req.params.date_lapsing;
-  let end_date = req.params.end_date;
-  let start_time_slot = req.params.start_time_slot;
-  let end_time_slot = req.params.end_time_slot;
-  let comment = req.params.comment;
+	let id = req.body.id;
+  let name = req.body.name;
+  let quantity = req.body.quantity;
+  let state = req.body.state;
+  let date_lapsing = req.body.date_lapsing;
+  let end_date = req.body.end_date;
+  let start_time_slot = req.body.start_time_slot;
+  let end_time_slot = req.body.end_time_slot;
+  let comment = req.body.comment;
 
   if(id ===undefined || name === undefined || quantity === undefined || state === undefined || date_lapsing === undefined || end_date === undefined || start_time_slot === undefined || end_time_slot === undefined || comment === undefined ){
     res.status(400).end();
@@ -69,26 +72,11 @@ advertRouter.post('/delete/:id', Admin.verifyToken, function(req, res){
 	res.status(204).end();
 });
 
-advertRouter.get('/all/:name/:quantity/:state/:date_lapsing/:end_date/:start_time_slot/:end_time_slot/:comment', function(req,res){
-
-  let name = req.params.name;
-  let quantity = req.params.quantity;
-  let state = req.params.state;
-  let date_lapsing = req.params.date_lapsing;
-  let end_date = req.params.end_date;
-  let start_time_slot = req.params.start_time_slot;
-  let end_time_slot = req.params.end_time_slot;
-  let comment = req.params.comment;
-
-  if(name === undefined || quantity === undefined || state === undefined || date_lapsing === undefined || end_date === undefined || start_time_slot === undefined || end_time_slot === undefined || comment === undefined ){
-    res.status(400).end();
-    return;
-  }
-
+advertRouter.get('/all', function(req,res){
 
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	AdvertController.getAll(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment, limit, offset)
+	AdvertController.getAll(req.query.name, req.query.quantity, req.query.state, req.query.date_lapsing, req.query.end_date, req.query.start_time_slot, req.query.end_time_slot, req.query.comment, limit, offset)
 	.then((adverts) => {
 		res.json(adverts);
 	})

@@ -50,7 +50,7 @@ categoryRouter.post('/delete/:id', Admin.verifyToken, function(req, res){
 	res.status(204).end();
 });
 
-categoryRouter.get('/all/:name', function(req,res){
+categoryRouter.get('/all/:name', Admin.verifyToken, function(req,res){
 	let name = req.body.name;
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
@@ -70,7 +70,7 @@ categoryRouter.get('/all/:name', function(req,res){
 	})
 });
 
-categoryRouter.get('/getCategory/:id', function(req,res){
+categoryRouter.get('/getCategory/:id', Admin.verifyToken ,function(req,res){
 	let id = req.params.id;
 	if(id === undefined){
 		res.status(400).end();

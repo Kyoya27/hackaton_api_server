@@ -4,22 +4,22 @@ const Op = ModelIndex.Sequelize.Op;
 
 const AdvertController = function(){};
 
-AdvertController.add = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment){
+AdvertController.add = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product){
 	return Advert.create({
 		name: name,
-		lastname: lastname,
-		firstname: firstname,
 		quantity: quantity,
 		state: state,
 		date_lapsing: date_lapsing,
 		end_date: end_date,
 		start_time_slot: start_time_slot,
 		end_time_slot: end_time_slot,
-		comment: comment
+		comment: comment,
+		id_user: id_user,
+		id_product: id_product
 	});
 };
 
-AdvertController.update = function(id,name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment){
+AdvertController.update = function(id,name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product){
 	const options = {}
 	if(name !== undefined){
 		options.name = name;
@@ -45,6 +45,12 @@ AdvertController.update = function(id,name, quantity, state, date_lapsing, end_d
 	if(comment !== undefined){
 		options.comment = comment;
 	}
+	if(id_user !== undefined){
+		options.id_user = id_user;
+	}
+	if(id_product !== undefined){
+		options.id_product = id_product;
+	}
 	return Advert.update(options, {returning: true, where: {id: id}});
 }
 
@@ -53,7 +59,7 @@ AdvertController.delete = function(id){
 }
 
 
-AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment, limit, offset){
+AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment,id_user,id_product, limit, offset){
 	const where = {};
 	const options = {};
 	if(name!== undefined){
@@ -94,6 +100,16 @@ AdvertController.getAll = function(name, quantity, state, date_lapsing, end_date
 	if(comment!== undefined){
 		where.comment = {
 			[Op.like]: `${comment}%`
+		}
+	}
+	if(id_user!== undefined){
+		where.id_user = {
+			[Op.like]: `${id_user}%`
+		}
+	}
+	if(id_product!== undefined){
+		where.id_product = {
+			[Op.like]: `${id_product}%`
 		}
 	}
 	options.where = where;

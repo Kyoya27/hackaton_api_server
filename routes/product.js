@@ -24,12 +24,12 @@ if(name === undefined || id_category === undefined){
 	})
 });
 
-productRouter.post('/update/:id/:name/:id_category', Admin.verifyToken, function(req, res){
+productRouter.post('/update/:name/:id_category', Admin.verifyToken, function(req, res){
 
-	let id = req.params.id;
 	let id_category = req.params.id_category;
+	let name = req.params.name;
 
-	if( name === undefined || id_category === undefined){
+	if( name === undefined || id_category === undefined ){
 		res.status(400).end();
 		return;
 	}
@@ -54,18 +54,11 @@ productRouter.post('/delete/:id', Admin.verifyToken, function(req, res){
 	res.status(204).end();
 });
 
-productRouter.get('/all/:name/:id_category', function(req,res){
-
-let name = req.params.name;
-let id_category = req.params.id_category;
-	if( name === undefined || id_category === undefined){
-		res.status(400).end();
-		return;
-	}
+productRouter.get('/all', Admin.verifyToken , function(req,res){
 
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	ProductController.getAll(name,id_category, limit, offset)
+	ProductController.getAll(req.query.name,req.query.id_category, limit, offset)
 	.then((products) => {
 		res.json(products);
 	})
@@ -75,7 +68,7 @@ let id_category = req.params.id_category;
 	})
 });
 
-productRouter.get('/getProduct/:id', function(req,res){
+productRouter.get('/getProduct/:id',  Admin.verifyToken,function(req,res){
 
 	let id = req.params.id;
 
