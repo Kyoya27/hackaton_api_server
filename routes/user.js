@@ -58,22 +58,21 @@ UserController.add(mail,firstname,lastname,hash,adress)
 
 
 
-userRouter.post('/update/:id/:firstname/:lastname/:mail/:password/:adress', Admin.verifyToken, function(req, res){
+userRouter.post('/update/:firstname/:lastname/:mail/:password/:adress', Admin.verifyToken, function(req, res){
 
-	let id = req.params.id;
   let mail = req.params.mail;
   let firstname = req.params.firstname;
   let lastname = req.params.lastname;
   let password = req.params.password;
   let adress = req.params.adress;
 
-  if(id === undefined || mail === undefined || firstname === undefined || lastname === undefined || password === undefined || adress === undefined ){
+  if(mail === undefined || firstname === undefined || lastname === undefined || password === undefined || adress === undefined ){
     res.status(400).end();
     return;
   }
 
 
-	UserController.update(id,mail,firstname,lastname,password,adress)
+	UserController.update(mail,firstname,lastname,password,adress)
 	.catch((err) =>{
 		console.log(err);
 		res.status(500).end();
@@ -196,6 +195,26 @@ userRouter.get('/confirmed' , function(req,res){
   }
 
   UserController.Confirmed(mail);
+  res.status(200).end();
+  return;
+});
+
+userRouter.put('/resetPassword/:mail/:pw1/:pw2' , function(req,res){
+  const mail = req.params.mail;
+  const pw1 = req.params.pw1;
+  const pw2 = req.params.pw2;
+
+  if(mail === undefined || pw1 === undefined || pw2 === undefined) {
+    res.status(400).end();
+    return;
+  }
+  UserController.checkUserEmail(mail)
+  .then((user)=>{
+    if(pw1 === pw2){
+      let hash = bcrypt.hashSync(pw1,10);
+      UserController.update('','','',hash);
+    }
+  })
   res.status(200).end();
   return;
 });

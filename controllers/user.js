@@ -18,7 +18,7 @@ UserController.add = function(mail, firstname, lastname, password, adress){
 	});
 };
 
-UserController.update = function(id,mail, firstname, lastname, password, adress){
+UserController.update = function(mail, firstname, lastname, password, adress){
 	const options = {}
 	if(mail !== undefined){
 		options.mail = mail;
@@ -36,7 +36,7 @@ UserController.update = function(id,mail, firstname, lastname, password, adress)
 	if(adress !== undefined){
 		options.adress = adress;
 	}
-	return User.update(options, {returning: true, where: {id: id}});
+	return User.update(options, {returning: true, where: {mail: mail}});
 }
 
 UserController.delete = function(id){
