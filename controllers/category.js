@@ -53,4 +53,9 @@ CategoryController.getCategory = function(id){
 	return Category.find(options)
 }
 
+CategoryController.getAllCategory = function(){
+	return Category.findAll();
+}
+
+
 module.exports = CategoryController;

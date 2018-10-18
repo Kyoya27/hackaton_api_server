@@ -150,7 +150,17 @@ userRouter.post('/login/:mail/:password', function(req, res) {
                 throw err;
               }
             });
-            res.status(201).json(user);
+            var fullUser = {
+              id: user.id,
+              mail: user.mail,
+              firstname: user.firstname,
+              lastname: user.lastname,
+              password: user.password,
+              adress: user.adress,
+              mail_confirmed: user.mail_confirmed,
+              token: token
+            }
+            res.status(201).json(fullUser);
 
           }
         }
