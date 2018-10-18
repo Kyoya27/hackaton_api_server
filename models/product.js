@@ -14,10 +14,10 @@ module.exports = function(sequelize, DataTypes){
 		timestamps: false,
 		freezeTableName: true
 	});
+	Product.associate = _associate;
 	return Product;
 }
 
 function _associate(models) {
-	models.Advert.belongsTo(models.User, { foreignKey: 'id_user', targetKey: 'id' });
-	models.Product.belongsTo(models.Advert, { foreignKey: 'id_advert', targetKey: 'id' });
+	models.Product.belongsTo(models.Category, { foreignKey: 'id_category', targetKey: 'id' });
 }

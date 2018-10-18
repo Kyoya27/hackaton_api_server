@@ -50,5 +50,5 @@ module.exports = function(sequelize, DataTypes){
 // INTERNAL
 function _associate(models) {
 	models.Advert.belongsTo(models.User, { foreignKey: 'id_user', targetKey: 'id' });
-	//models.Advert.belongsTo(models.Product, { foreignKey: 'id_product', targetKey: 'id' });
+	models.Advert.belongsTo(models.Product, { foreignKey: 'id_product', targetKey: 'id' });
 }

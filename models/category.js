@@ -16,10 +16,5 @@ module.exports = function(sequelize, DataTypes){
 		freezeTableName: true,
 		timestamps: false
 	});
-	Category.associate = _associate;
 	return Category;
-}
-
-function _associate(models) {
-	models.Advert.hasMany(models.Product, { foreignKey: 'id_product', targetKey: 'id' });
 }
