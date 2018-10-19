@@ -21,14 +21,23 @@ let end_time_slot = req.body.end_time_slot;
 let comment = req.body.comment;
 let id_product = req.body.id_product;
 let id_user = req.body.id_user;
+    let id_category = req.body.id_category;
 
-
+console.log(name);
+console.log(quantity);
+console.log(state);
+    console.log(date_lapsing);
+    console.log(end_date);
+    console.log(end_time_slot);
+    console.log(start_time_slot);
+    console.log(comment);
+    console.log(id_category);
 
 if(name === undefined || quantity === undefined || state === undefined || date_lapsing === undefined || end_date === undefined || start_time_slot === undefined || end_time_slot === undefined || comment === undefined ){
   res.status(400).end();
   return;
 }
-AdvertController.add(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment, id_user, id_product)
+AdvertController.add(name, quantity, state, date_lapsing, end_date, start_time_slot, end_time_slot, comment, id_user, id_product, id_category)
 	.then((advert) =>{
 		res.status(201).json(advert);
 	})

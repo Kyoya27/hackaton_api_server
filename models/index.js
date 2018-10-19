@@ -12,7 +12,7 @@ ModelIndex.getModel = function (modelName) {
     return this[modelName];
 };
 
-const sequelize = new Sequelize('toogoodtothrow', 'root', 'root', {
+const sequelize = new Sequelize('toogoodtothrow', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,

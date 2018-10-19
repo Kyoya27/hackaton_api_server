@@ -23,6 +23,8 @@ let password = req.body.password;
 let password2 = req.body.password2;
 let adress = req.body.adress;
 
+console.log("test add user");
+
 if( mail === undefined || firstname === undefined || lastname === undefined || password === undefined || adress === undefined || password2 === undefined){
   res.status(400).end();
   return;
@@ -96,7 +98,7 @@ userRouter.get('/all', Admin.verifyToken, function(req,res){
 
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	UserController.getAll(req.query.mail, req.query.firstname, req.query.lastname, req.query.password, req.query.adress, limit, offset)
+	UserController.getAll(req.query.id, req.query.mail, req.query.firstname, req.query.lastname, req.query.password, req.query.adress, limit, offset)
 	.then((users) => {
 		res.json(users);
 	})

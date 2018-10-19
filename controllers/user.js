@@ -44,9 +44,14 @@ UserController.delete = function(id){
 }
 
 
-UserController.getAll = function(mail, firstname, lastname, password, adress, limit, offset){
+UserController.getAll = function(id, mail, firstname, lastname, password, adress, limit, offset){
 	const where = {};
 	const options = {};
+    if(id!== undefined){
+        where.id = {
+            [Op.like]: `${id}%`
+        }
+    }
 	if(mail!== undefined){
 		where.mail = {
 			[Op.like]: `${mail}%`

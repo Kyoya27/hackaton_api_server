@@ -18,11 +18,11 @@ module.exports = function(sequelize, DataTypes){
 			allowNull: false
 		},
 		date_lapsing: {
-	      type: DataTypes.DATE,
+	      type: DataTypes.STRING,
 	      allowNull: false
 	    },
 	    end_date: {
-	      type: DataTypes.DATE,
+	      type: DataTypes.STRING,
 	      allowNull: false
 	    },
 	    start_time_slot: {
